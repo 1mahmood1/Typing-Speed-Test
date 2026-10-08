@@ -1,0 +1,356 @@
+.button.clicked {
+    border-color: #60a5facc;
+    background-color: #3b82f60d;
+    color: #60a5fa;
+}
+
+.underLineSpan {
+    position: relative;
+}
+
+.underLineSpan::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 100%;
+    height: 2px;
+    background-color: white;
+    border-radius: 999px;
+}
+
+/* Buttons used on the start screen */
+.button {
+    border-radius: 0.5rem;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    padding: 0.375rem 1rem;
+    color: rgb(255 255 255 / 0.8);
+    font-size: 15px;
+    transition: 180ms ease;
+}
+
+.button:hover {
+    border-color: rgb(96 165 250 / 0.8);
+    background-color: rgb(59 130 246 / 0.05);
+    color: rgb(96 165 250);
+}
+
+/* The existing JavaScript adds .hidden to #startButton.
+   This lets the start screen disappear without changing JS. */
+#startScreen:has(#startButton.hidden) {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+    transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+#startScreen {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 180ms ease, visibility 180ms ease;
+}
+
+#difficultyPopup {
+    animation: fadeIn 180ms ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+
+#resultScreen {
+    animation: resultFadeIn 0.25s ease-out;
+}
+
+@keyframes resultFadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* =========================================
+   LIGHT THEME
+   ========================================= */
+
+body {
+    transition:
+        background-color 200ms ease,
+        color 200ms ease;
+}
+
+/* Main page */
+body.light-theme {
+    background-color: #f5f7fb;
+    color: #111827;
+}
+
+/* =========================================
+   START SCREEN
+   ========================================= */
+
+.light-theme #startScreen {
+    background-color: rgba(245, 247, 251, 0.88);
+}
+
+.light-theme #startScreen > div {
+    background-color: rgba(255, 255, 255, 0.96);
+    border-color: rgba(17, 24, 39, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
+}
+
+.light-theme #startScreen h2 {
+    color: #111827;
+}
+
+.light-theme #startScreen p {
+    color: rgba(17, 24, 39, 0.5);
+}
+
+
+/* =========================================
+   DIFFICULTY BUTTONS
+   ========================================= */
+
+.light-theme .button {
+    border-color: rgba(17, 24, 39, 0.15);
+    color: rgba(17, 24, 39, 0.8);
+    background-color: transparent;
+}
+
+.light-theme .button:hover {
+    border-color: rgba(96, 165, 250, 0.8);
+    background-color: rgba(59, 130, 246, 0.05);
+    color: #2563eb;
+}
+
+.light-theme .button.clicked {
+    border-color: rgba(96, 165, 250, 0.8);
+    background-color: rgba(59, 130, 246, 0.08);
+    color: #2563eb;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.light-theme h1 {
+    color: #111827;
+}
+
+.light-theme header p,
+.light-theme header span {
+    color: rgba(17, 24, 39, 0.55);
+}
+
+.light-theme #personalBest {
+    color: #111827;
+}
+
+
+/* =========================================
+   THEME BUTTON
+   ========================================= */
+
+.light-theme #themeToggle {
+    border-color: rgba(17, 24, 39, 0.15);
+    background-color: rgba(17, 24, 39, 0.04);
+}
+
+.light-theme #themeToggle:hover {
+    border-color: rgba(96, 165, 250, 0.8);
+    background-color: rgba(59, 130, 246, 0.08);
+}
+
+
+/* =========================================
+   STATS SECTION
+   ========================================= */
+
+.light-theme section {
+    border-color: rgba(17, 24, 39, 0.1);
+}
+
+.light-theme section span {
+    color: rgba(17, 24, 39, 1);
+}
+
+.light-theme #wpm,
+.light-theme #accuracy,
+.light-theme #time {
+    color: #111827;
+}
+
+
+/* =========================================
+   DIFFICULTY DISPLAY
+   ========================================= */
+
+.light-theme #mainPageDifficulty span {
+    color: rgba(17, 24, 39, 0.6);
+}
+
+.light-theme #mainPageDifficulty span:not(:first-child) {
+    border-color: rgba(17, 24, 39, 0.12);
+}
+
+
+/* =========================================
+   TYPING AREA
+   ========================================= */
+
+.light-theme #paragraph {
+    color: rgba(17, 24, 39, 0.5);
+}
+
+.light-theme .underLineSpan::after {
+    background-color: #111827;
+}
+
+
+/* =========================================
+   POPUP
+   ========================================= */
+
+.light-theme #difficultyPopup {
+    background-color: rgba(17, 24, 39, 0.3);
+}
+
+.light-theme #difficultyPopup > div {
+    background-color: #d7d7d7;
+    border-color: rgba(17, 24, 39, 0.1);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+}
+
+.light-theme #difficultyPopup h2 {
+    color: #111827;
+}
+
+.light-theme #difficultyPopup p {
+    color: rgba(17, 24, 39, 0.5);
+}
+
+
+/* =========================================
+   RESULT SCREEN
+   ========================================= */
+
+.light-theme #resultScreen {
+    background-color: #f5f7fb;
+}
+
+.light-theme #resultScreen h2 {
+    color: #111827;
+}
+
+.light-theme #resultScreen p {
+    color: #111827;
+}
+
+.light-theme #resultScreen .border {
+    border-color: rgba(17, 24, 39);
+}
+
+.light-theme #resultWpm,
+.light-theme #resultPersonalBest {
+    color: #111827;
+}
+
+.light-theme #goAgainButton {
+    background-color: #111827;
+    color: #ffffff;
+}
+
+.light-theme #goAgainButton:hover {
+    background-color: #1f2937;
+}
+
+
+/* =========================================
+   TEXT COLORS
+   ========================================= */
+
+.light-theme .text-white {
+    color: #0f1521;
+}
+
+.light-theme .text-white\/90 {
+    color: rgba(12, 16, 26, 0.9);
+}
+
+.light-theme .text-white\/80 {
+    color: rgba(17, 24, 39, 0.8);
+}
+
+.light-theme .text-white\/60 {
+    color: rgba(17, 24, 39, 0.6);
+}
+
+.light-theme .text-white\/50 {
+    color: #111827;
+}
+
+.light-theme .text-white\/45 {
+    color: rgba(17, 24, 39, 1);
+}
+
+.light-theme .text-white\/40 {
+    color: rgba(17, 24, 39, 0.6);
+}
+
+.light-theme .text-white\/35 {
+    color: rgba(17, 24, 39, 0.6);
+}
+
+.light-theme .text-white\/30 {
+    color: rgba(17, 24, 39, 0.6);
+}
+
+.light-theme .text-white\/25 {
+    color: rgba(17, 24, 39, 0.6);
+}
+
+
+/* =========================================
+   BORDERS
+   ========================================= */
+
+.light-theme .border-white\/20 {
+    border-color: rgba(17, 24, 39, 0.2);
+}
+
+.light-theme .border-white\/15 {
+    border-color: rgba(17, 24, 39, 0.15);
+}
+
+.light-theme .border-white\/10 {
+    border-color: rgba(17, 24, 39, 0.1);
+}
+
+
+/* =========================================
+   START SCREEN BUTTON
+   ========================================= */
+
+.light-theme #startButton {
+    color: #dedddd;
+}
+
+
+/* =========================================
+   RESULT SCREEN BUTTON
+   ========================================= */
+
+.light-theme #goAgainButton {
+    border-color: transparent;
+}

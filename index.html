@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <title>Typing Speed Test</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="min-h-screen bg-[#111111] text-white">
+  <div class="min-h-screen select-none">
+
+    <!-- =========================================================
+         START SCREEN
+         ========================================================= -->
+    <div
+      id="startScreen"
+      class="fixed inset-0 z-[9998] flex items-center justify-center bg-[#111111]/80 p-5 backdrop-blur-md"
+    >
+      <div
+        class="w-full max-w-[620px] rounded-2xl border border-white/10 bg-[#181818]/95 p-7 shadow-2xl shadow-black/50 sm:p-8"
+      >
+        <!-- Title -->
+        <div class="text-center">
+          <h2 class="text-[28px] font-bold tracking-tight text-white">
+            Typing Speed Test
+          </h2>
+          <p class="mt-2 text-[14px] text-white/40">
+            Type as fast as you can
+          </p>
+        </div>
+
+        <!-- Difficulty -->
+        <div class="mt-8">
+          <div class="mb-3 flex items-center justify-between">
+            <span class="text-[14px] text-white/40">Difficulty</span>
+            <span class="text-[12px] text-white/25">Choose a level</span>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3">
+            <button
+              id="easy"
+              type="button"
+              class="button w-full"
+            >
+              Easy
+            </button>
+
+            <button
+              id="medium"
+              type="button"
+              class="button w-full"
+            >
+              Medium
+            </button>
+
+            <button
+              id="hard"
+              type="button"
+              class="button w-full"
+            >
+              Hard
+            </button>
+          </div>
+        </div>
+
+        <!-- Start -->
+        <button
+          id="startButton"
+          type="button"
+          class="mt-7 w-full rounded-xl bg-blue-500 px-6 py-3.5 text-[16px] font-semibold text-white shadow-lg shadow-blue-500/20 transition-all duration-200 hover:bg-blue-400 active:scale-[0.98]"
+        >
+          Start Typing Test
+        </button>
+      </div>
+    </div>
+
+    <!-- =========================================================
+         MAIN PAGE
+         ========================================================= -->
+    <main class="mx-auto w-full max-w-[1240px] px-5 pt-7 sm:px-8">
+
+      <!-- Header -->
+      <header class="flex items-start justify-between gap-6">
+        <!-- Logo + Title -->
+        <div class="flex items-start gap-3">
+          <div>
+            <img
+              src="/images/logo-small.svg"
+              alt="Typing Speed Test Logo"
+              class="h-auto w-auto"
+            />
+          </div>
+
+          <div>
+            <h1 class="text-[25px] font-bold leading-none tracking-tight">
+              Typing Speed Test
+            </h1>
+            <p class="mt-1 text-[12px] text-white/40">
+              Type as fast as you can
+            </p>
+          </div>
+        </div>
+
+        <!-- Personal Best -->
+        <div class="flex items-center gap-2 pt-1">
+          <span class="text-[20px] text-yellow-300">🏆</span>
+          <span class="hidden text-[16px] text-white/50 sm:inline">
+            Personal best:
+          </span>
+          <span
+            id="personalBest"
+            class="text-[16px] font-medium text-white/90"
+          >
+            0
+          </span>
+          <span class="text-[16px] font-medium text-white/90">
+            WPM
+          </span>
+          <button
+            id="themeToggle"
+            type="button"
+            aria-label="Toggle theme"
+            class="flex h-10 w-10 items-center justify-center rounded-xl border border-white/20 bg-white/5 text-[19px] transition hover:border-blue-400/80 hover:bg-blue-500/10"
+          >
+            🌙
+            <!-- ☀️ -->
+          </button>
+        </div>
+        <!-- Theme Toggle -->
+      </header>
+
+      <!-- Stats + Controls -->
+      <section
+        class="mt-14 flex flex-col gap-5 border-b border-white/10 pb-4 lg:flex-row lg:items-center lg:justify-between"
+      >
+        <!-- Stats -->
+        <div class="flex flex-wrap items-center gap-4 sm:gap-5">
+
+          <div class="hidden h-7 w-px bg-white/15 sm:block"></div>
+
+          <!-- Accuracy -->
+          <div class="flex items-center gap-3">
+            <span class="text-[18px] text-white/45">Accuracy:</span>
+            <span id="accuracy" class="text-[25px] font-bold">0</span>
+            <span class="text-[25px] font-bold">%</span>
+          </div>
+
+          <div class="hidden h-7 w-px bg-white/15 sm:block"></div>
+
+          <!-- Time -->
+          <div class="flex items-center gap-2">
+            <span class="text-[18px] text-white/45">Time:</span>
+            <span id="time" class="text-[25px] font-bold">00</span>
+            <span class="text-[25px] font-bold">s</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Typing Area -->
+      <div class="relative mt-8">
+        <div
+          id="paragraph"
+          class="select-none text-[24px] font-medium leading-[1.95] tracking-[0.01em] text-white/30 blur-[4px] transition-all duration-500 sm:text-[30px]"
+        ></div>
+      </div>
+
+      <!-- Difficulty Popup -->
+      <div
+        id="difficultyPopup"
+        class="fixed inset-0 z-[10000] hidden items-center justify-center bg-black/70 p-4 backdrop-blur-sm"
+      >
+        <div
+          class="w-full max-w-[420px] rounded-2xl border border-white/10 bg-[#181818] p-7 text-center shadow-2xl shadow-black/50"
+        >
+          <div
+            class="mx-auto mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-blue-500/10 text-2xl font-bold text-blue-400"
+          >
+            !
+          </div>
+
+          <h2 class="text-[22px] font-semibold text-white">
+            Difficulty Not Selected
+          </h2>
+
+          <p class="mt-3 text-[15px] leading-6 text-white/50">
+            Please choose a difficulty level before starting.
+          </p>
+
+          <button
+            type="button"
+            id="closeDifficultyPopup"
+            class="mt-6 rounded-xl bg-blue-500 px-6 py-2.5 text-[15px] font-semibold text-white transition-all duration-200 hover:bg-blue-400 active:scale-95"
+          >
+            Choose
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- =========================================================
+         RESULT SCREEN
+        ==========================================================  -->
+
+<!-- RESULT SCREEN -->
+      <div
+        id="resultScreen"
+        class="fixed inset-0 z-[9999] hidden h-screen w-screen items-center justify-center bg-[#111111] px-5"
+      >
+        <div class="flex w-full flex-col items-center">
+        <div class="relative mb-7 flex h-[130px] w-[130px] items-center justify-center">
+
+          <div
+          class="absolute inset-[12px] rounded-full bg-green-500/15"
+          ></div>
+          <!-- Image -->
+          <img
+            src="/images/icon-completed.svg"
+            alt="Test completed"
+            class="relative z-10 h-[82px] w-[82px]"
+          />
+
+        </div>
+          <div class="text-center">
+            <h2
+              class="text-[38px] font-bold leading-none tracking-tight text-white sm:text-[42px]"
+            >
+              Test Complete!
+            </h2>
+
+            <p class="mt-4 text-[17px] text-white/40 sm:text-[18px]">
+              Solid run. Keep pushing to beat your high score.
+            </p>
+          </div>
+
+          <!-- Results -->
+          <div
+            class="mt-10 grid w-full max-w-[520px] grid-cols-3 gap-2.5"
+          >
+            <!-- WPM -->
+            <div
+              class="flex flex-col rounded-lg border border-white/15 bg-transparent items-center text-center"
+            >
+              <p class="text-[15px] text-white/45">
+                WPM:
+              </p>
+
+              <p
+                id="resultWpm"
+                class="mt-1 text-[25px] font-bold text-white"
+              >
+                0
+              </p>
+            </div>
+
+            <!-- Accuracy -->
+            <div
+              class="flex flex-col rounded-lg border border-white/15 bg-transparent items-center text-center"
+            >
+              <p class="text-[15px] text-white/45">
+                Accuracy:
+              </p>
+
+              <p
+                id="resultAccuracy"
+                class="mt-1 text-[25px] font-bold text-green-400"
+              >
+                0%
+              </p>
+            </div>
+
+            <!-- Personal Best -->
+            <div
+              class="flex flex-col rounded-lg border border-white/15 bg-transparent items-center text-center"
+            >
+              <p class="text-[15px] text-white/45">
+                Personal Best:
+              </p>
+
+              <p
+                id="resultPersonalBest"
+                class="mt-1 text-[25px] font-bold text-white"
+              >
+                0
+              </p>
+            </div>
+          </div>
+
+          <!-- Main Result -->
+          <div class="mt-8 text-center">
+            <p class="text-[14px] text-white/35">
+              Your typing speed
+            </p>
+
+            <p
+              id="resultMainWpm"
+              class="mt-1 text-[42px] font-bold text-blue-400"
+            >
+              0
+            </p>
+            
+            <p
+              class="mt-1 text-[42px] font-bold text-blue-400"
+            >
+              WPM
+            </p>
+
+          </div>
+
+          <!-- Go Again -->
+          <button
+            id="goAgainButton"
+            type="button"
+            class="mt-8 rounded-xl bg-white px-5 py-3 text-[16px] font-semibold text-[#111111] transition hover:bg-white/90 active:scale-95"
+          >
+            Go Again
+            <span class="ml-1.5 text-[18px]">
+              ↶
+            </span>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
