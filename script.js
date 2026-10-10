@@ -116,6 +116,7 @@ let timeLeft = 0;
  * Handles typing keydown events, accuracy calculation, and letter styling.
  */
 function handleTypingInput(e) {
+
     if (index >= letters.length) {
         return;
     }
@@ -130,51 +131,88 @@ function handleTypingInput(e) {
         allKeyDown++;
     }
     
-    // Correct letter pressed
-    if (keyPress === currentLetter) {
-        spans[index].classList.remove('underLineSpan');
-        spans[index].classList.add('text-green-500');
-        spans[index].classList.remove('text-red-500');
-        index++;
-        correctness++;
-        
-        if (index < letters.length) {
+    // // letter pressed // //
+
+    if (keyPress) {
+
+        // // Correct letter pressed // // 
+        if (keyPress === currentLetter) {
+            spans[index].classList.add('text-green-500');
+            spans[index].classList.remove('text-red-500');
+            spans[index].classList.remove('underLineSpan');
+            correctness++;
+            index++
             spans[index].classList.add('underLineSpan');
-        } 
+        }
+        
+        // Incorrect letter pressed
+        if (keyPress !== currentLetter && keyPress.length === 1) {
+            
+            spans[index].classList.remove('underLineSpan');
+            
+            spans[index].classList.add('text-red-500');
+            
+            if (errors >= 0) {
+                errors++;
+            }
+
+            index++;
+            spans[index].classList.add('underLineSpan');
+
+        }
+
+        if (index > 0 && (keyPress === 'Backspace' || keyPress === 'Delete')) {
+
+            const spansIndex = index - 1;
+
+            if (spans[spansIndex].classList.contains('text-red-500')) {
+                if (errors >= 0) {
+                    errors--;
+                }
+            } else if (spans[spansIndex].classList.contains('text-green-500')) {
+                correctness--;
+            }
+
+            spans[spansIndex].classList.remove('text-red-500', 'text-green-500');
+
+            spans[index].classList.remove('underLineSpan');
+
+            index--;
+
+            spans[index].classList.add('underLineSpan');
+        }
+
+        // Calculate and update live accuracy percentage
+        if (keyPress.length === 1) {
+            accuracy = ((correctness / (correctness + errors)) * 100).toFixed(2);
+            let accuracyResultHtml = document.querySelector('#resultAccuracy');
+            let accuracyMainHtml = document.querySelector('#accuracy');
+            if (accuracyResultHtml) accuracyResultHtml.innerText = accuracy;
+            if (accuracyMainHtml) accuracyMainHtml.innerText = accuracy;
+        }
+        
         if (index === letters.length) {
             stopTest();
         } 
-    } 
+    }
+
+    // if (keyPress === currentLetter) {
+    //     spans[index].classList.remove('underLineSpan');
+    //     spans[index].classList.add('text-green-500');
+    //     spans[index].classList.remove('text-red-500');
+    //     index++;
+    //     correctness++;
+        
+    //     if (index < letters.length) {
+    //         spans[index].classList.add('underLineSpan');
+    //     } 
+    //     if (index === letters.length) {
+    //         stopTest();
+    //     } 
+    // } 
     
     // Handle backspace or delete key
-    if (index > 0 && (keyPress === 'Backspace' || keyPress === 'Delete')) {
-        let spansIndex = index - 1;
-        spans[spansIndex].classList.remove('text-red-500', 'text-green-500');
-        spans[index].classList.remove('underLineSpan');
-        index--;
-        
-        if (correctness > 0) {
-            correctness--;
-        }
-        
-        spans[index].classList.add('underLineSpan');
-        return;
-    }
-    
-    // Incorrect letter pressed
-    if (keyPress !== currentLetter && keyPress.length === 1) {
-        spans[index].classList.add('text-red-500');
-        errors++;
-    }
-    
-    // Calculate and update live accuracy percentage
-    if (keyPress.length === 1) {
-        accuracy = ((correctness / (correctness + errors)) * 100).toFixed(2);
-        let accuracyResultHtml = document.querySelector('#resultAccuracy');
-        let accuracyMainHtml = document.querySelector('#accuracy');
-        if (accuracyResultHtml) accuracyResultHtml.innerText = accuracy;
-        if (accuracyMainHtml) accuracyMainHtml.innerText = accuracy;
-    }
+
 }
 
 // ==========================================
