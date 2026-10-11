@@ -184,7 +184,7 @@ function handleTypingInput(e) {
 
         // Calculate and update live accuracy percentage
         if (keyPress.length === 1) {
-            accuracy = ((correctness / (correctness + errors)) * 100).toFixed(2);
+            accuracy = ((correctness + errors) > 0 ? correctness / (correctness + errors) * 100 : 0).toFixed(2);
             let accuracyResultHtml = document.querySelector('#resultAccuracy');
             let accuracyMainHtml = document.querySelector('#accuracy');
             if (accuracyResultHtml) accuracyResultHtml.innerText = accuracy;
